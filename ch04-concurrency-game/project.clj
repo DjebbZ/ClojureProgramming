@@ -3,7 +3,7 @@
 Clojure's array-map, explored in chapter 3 of 'Clojure Programming' by
 Emerick, Carper, and Grand."
   :url "http://github.com/clojurebook/ClojureProgramming"
-  :dependencies [[org.clojure/clojure "1.3.0"]]
+  :dependencies [[org.clojure/clojure "1.5.1"]]
   :profiles {:1.4 {:dependencies [[org.clojure/clojure "1.4.0-beta6"]]}}
   :run-aliases {:loot com.clojurebook.concurrency.game/-loot-demo
                 :battle com.clojurebook.concurrency.game/-battle-demo

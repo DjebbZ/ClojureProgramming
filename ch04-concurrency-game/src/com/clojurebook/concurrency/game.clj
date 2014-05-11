@@ -1,5 +1,6 @@
 (ns com.clojurebook.concurrency.game
   (:use [com.clojurebook.concurrency :only (futures wait-futures)])
+  (:require [com.clojurebook.concurrency.game-validators :as gv])
   (:require clojure.pprint
             [clojure.set :as set]))
 
@@ -39,7 +40,7 @@
 
 (defn loot
   "Transfers one value from (:items @from) to (:items @to).
-   Assumes that each is a set.  Returns the new state of 
+   Assumes that each is a set.  Returns the new state of
    from."
   [from to]
   (dosync
@@ -49,7 +50,7 @@
 
 (defn flawed-loot
   "Transfers one value from (:items @from) to (:items @to).
-   Assumes that each is a set.  Returns the new state of 
+   Assumes that each is a set.  Returns the new state of
    from.
 
    *Will* produce invalid results, due to inappropriate use
@@ -102,5 +103,18 @@
 
   (shutdown-agents))
 
+(defn- -log-demo
+  []
+  (def smaug (character "Smaug" :health 500 :strength 400))
+  (def bilbo (character "Bilbo" :health 100 :strength 100))
+  (def gandalf (character "Gandalf" :health 75 :mana 1000))
 
+  (gv/log-reference bilbo gv/console gv/character-log)
+  (gv/log-reference smaug gv/console gv/character-log)
 
+  (wait-futures 1
+                (play bilbo attack smaug)
+                (play smaug attack bilbo)
+                (play gandalf heal bilbo)))
+
+(-log-demo)
